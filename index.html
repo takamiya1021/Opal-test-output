@@ -3,612 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>次世代AI炊飯器【Aoi】 | あなたの人生を変える一膳</title>
+    <title>Aoi炊飯器 | AI搭載・炊飯ワークフローシステム</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;800;900&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Outfit:wght@600;800;900&display=swap');
-        
-        body {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+        @keyframes background-pan {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-
-        .gradient-text {
-            background: linear-gradient(90deg, #3B82F6, #8B5CF6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
+        .animated-gradient {
+            background: linear-gradient(120deg, #020024, #040979, #00d4ff, #040979, #020024);
+            background-size: 300% 300%;
+            animation: background-pan 20s ease infinite;
         }
-
-        .hero-glow {
-            box-shadow: 0 0 100px 30px rgba(59, 130, 246, 0.3), 0 0 150px 60px rgba(139, 92, 246, 0.2);
-        }
-
-        .cta-button {
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4), 0 0 20px rgba(139, 92, 246, 0.3), inset 0 0 10px rgba(255,255,255,0.1);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6), 0 0 35px rgba(139, 92, 246, 0.5), inset 0 0 15px rgba(255,255,255,0.2);
-        }
-
-        .scroll-animate {
+        .fade-in-section {
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transition-delay: 0.2s;
+            transform: translateY(2rem);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-        
-        .scroll-animate.is-visible {
+        .fade-in-section.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
+        .glow-button {
+            box-shadow: 0 0 10px rgba(255, 69, 0, 0.6), 0 0 20px rgba(255, 69, 0, 0.4), 0 0 30px rgba(255, 69, 0, 0.2);
+            transition: all 0.3s ease-in-out;
         }
-
-        .accordion-item.active .accordion-content {
-            max-height: 500px; /* Adjust as needed */
+        .glow-button:hover {
+            box-shadow: 0 0 20px rgba(255, 69, 0, 0.9), 0 0 30px rgba(255, 69, 0, 0.6), 0 0 40px rgba(255, 69, 0, 0.3);
+            transform: scale(1.05);
         }
-        
-        .accordion-item.active .accordion-icon {
-            transform: rotate(45deg);
-        }
-
         .benefit-card {
-            background: rgba(23, 23, 35, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        
-        .testimonial-card {
-            background: rgba(28, 28, 40, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(23, 27, 61, 0.5);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
+        .benefit-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+        }
+        .text-glow {
+            text-shadow: 0 0 8px rgba(0, 212, 255, 0.7);
+        }
     </style>
+</head>
+<body class="bg-[#050816] text-gray-200 font-sans antialiased">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Noto Sans JP', 'sans-serif'],
-                        display: ['Outfit', 'sans-serif'],
+                        display: ['Exo 2', 'sans-serif'],
                     },
                     colors: {
-                        'brand-dark': '#0B0B13',
-                        'brand-dark-accent': '#11111B',
-                        'brand-light': '#F0F2F5',
-                        'brand-primary': '#3B82F6',
-                        'brand-secondary': '#8B5CF6',
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        }
+                        'brand-orange': '#ff4500',
+                        'brand-cyan': '#00d4ff',
+                        'brand-blue': '#040979',
+                        'dark-bg': '#050816',
+                        'light-text': '#E0E0E0',
                     }
                 }
             }
         }
     </script>
-</head>
-<body class="bg-brand-dark text-brand-light font-sans antialiased">
-    <main>
-        <!-- 1. Hero -->
-        <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 py-20 relative overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-b from-brand-dark via-brand-dark to-brand-dark-accent z-0"></div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 md:w-[600px] md:h-[600px] bg-gradient-to-tr from-brand-primary to-brand-secondary rounded-full opacity-20 blur-3xl hero-glow animate-float z-10"></div>
-            
-            <div class="relative z-20 space-y-8 scroll-animate">
-                <h1 class="font-display font-black text-4xl md:text-6xl leading-tight text-red-400 tracking-wider">
-                    警告：あなたの人生、<br class="md:hidden">このままずっと<br><span class="text-white">『ふつう』で終わる</span><br>かもしれません。
+
+    <div class="overflow-x-hidden">
+
+        <!-- 1. Hero Section -->
+        <section class="min-h-screen flex flex-col items-center justify-center text-center p-6 relative animated-gradient">
+            <div class="absolute inset-0 bg-black opacity-40"></div>
+            <div class="relative z-10 fade-in-section is-visible">
+                <h1 class="font-display text-4xl md:text-7xl font-black text-white leading-tight mb-4 text-glow">
+                    あなたの人生、<br class="md:hidden">このままで本当にいいですか？
                 </h1>
-                
-                <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 leading-relaxed">
-                    10年間、何も考えずに炊飯器の「ふつう」ボタンを押し続けてきたあなたへ。<br>
-                    そのワンタッチが、あなたの毎日から「感動」を奪っているとしたら…？
+                <p class="max-w-2xl mx-auto text-lg md:text-2xl text-gray-300 italic mb-8">
+                    「10年間ずっと『ふつう』のごはん。人生も『ふつう』。」<br>もし、そう感じているなら…これは、あなたへの最後通告です。
                 </p>
 
-                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-sm md:text-base">
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-4 backdrop-blur-sm">
-                        <p class="font-bold text-brand-primary">公式サイトサーバーダウン</p>
-                        <p class="text-gray-400 mt-1">この事実に気づいた人々が殺到</p>
+                <div class="max-w-3xl mx-auto space-y-4 text-left text-base md:text-lg mb-12">
+                    <div class="bg-white/10 backdrop-blur-sm p-4 rounded-lg flex items-center gap-4">
+                        <span class="text-brand-cyan text-2xl">★</span>
+                        <p><strong>MHK『暮らしのテクノロジー最前線』</strong>で特集後、公式サイトが3分でサーバーダウン</p>
                     </div>
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-4 backdrop-blur-sm">
-                        <p class="font-bold text-brand-primary">MHK特集</p>
-                        <p class="text-gray-400 mt-1">「日本の食卓革命」と報道</p>
+                    <div class="bg-white/10 backdrop-blur-sm p-4 rounded-lg flex items-center gap-4">
+                        <span class="text-brand-cyan text-2xl">★</span>
+                        <p>家電マガジン<strong>『TECH KITCHEN』</strong>で「2024年、最も革新的な調理家電」に選出</p>
                     </div>
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-4 backdrop-blur-sm">
-                        <p class="font-bold text-brand-primary">家電専門誌2024年受賞</p>
-                        <p class="text-gray-400 mt-1">最も革新的な調理家電に選出</p>
+                    <div class="bg-white/10 backdrop-blur-sm p-4 rounded-lg flex items-center gap-4">
+                        <span class="text-brand-cyan text-2xl">★</span>
+                        <p>予約3ヶ月待ちを記録した<strong>"問題の炊飯器"</strong>が、遂に一般販売開始</p>
                     </div>
                 </div>
 
-                <p class="max-w-2xl mx-auto text-lg md:text-xl text-gray-300">
-                    「たかがごはん」ではありません。<strong class="text-white font-bold">「されどごはん」</strong>です。<br>
-                    あなたの人生の質は、毎日のごはんで決まります。
-                </p>
-
-                <div>
-                    <p class="mb-4 text-sm text-gray-400">▼もう「ふつうの人生」には戻れない。最高の一膳を手に入れる▼</p>
-                    <a href="#offer" class="cta-button inline-block bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-bold text-lg md:text-xl py-4 px-10 rounded-full shadow-lg">
-                        今すぐAoi炊飯器の詳細を確認する
-                    </a>
-                </div>
+                <a href="#offer" class="inline-block bg-brand-orange text-white py-4 px-10 text-xl font-bold rounded-lg glow-button">
+                    今すぐ「ふつうの人生」に終止符を打つ
+                </a>
             </div>
         </section>
 
-        <!-- 2. Problem -->
-        <section class="py-20 px-4 bg-brand-dark-accent">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center scroll-animate">
-                    <h2 class="font-display font-bold text-3xl md:text-4xl">もし、ひとつでも当てはまったら、<br>この先を真剣にお読みください。</h2>
+        <main class="container mx-auto px-6 py-16 md:py-24 space-y-24 md:space-y-32">
+
+            <!-- 2. Problem Section -->
+            <section class="fade-in-section">
+                <h2 class="font-display text-3xl md:text-5xl font-bold text-center mb-4">毎日の食卓で、こんな<br class="md:hidden"><span class="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-yellow-400">「小さな諦め」</span>をしていませんか？</h2>
+                <div class="max-w-4xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700">炊飯器なんてどれも同じだと思っている。</div>
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700">「白米・ふつう」ボタンを押すだけの思考停止した毎日。</div>
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700">「丁寧な暮らし」に憧れるが、忙しくて時間がない。</div>
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700">健康は気になるが、正直、手間はかけたくない。</div>
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700">細かいパーツの掃除が地味に面倒くさい。</div>
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700">最新家電は「どうせ使いこなせない」と決めつけている。</div>
                 </div>
+                <div class="max-w-4xl mx-auto mt-6 bg-red-900/30 p-6 rounded-xl border border-red-500 text-center">
+                    <strong>98,000円は高い。</strong>失敗したくないから、結局いつもの選択をしてしまう。
+                </div>
+                <div class="max-w-3xl mx-auto text-center mt-12 space-y-6">
+                    <p class="text-lg">ひとつでも当てはまったなら、危険信号です。<br>その「小さな諦め」は、あなたの人生全体の諦めに繋がっています。</p>
+                    <p class="text-2xl font-bold text-white">「婚約指輪より先に炊飯器を買う時代」<br>「令和のごはんは、コードで炊く時代」</p>
+                    <p class="text-red-400 font-bold text-lg">この新しい常識を知らないままでは、あなたは旧時代に取り残され、食という最も本能的な生存競争で、静かに、しかし確実に<span class="text-2xl">「淘汰される側」</span>になってしまうのです。</p>
+                </div>
+            </section>
+
+            <!-- 3. Solution Section -->
+            <section class="fade-in-section text-center">
+                <p class="text-lg mb-4">そんな、停滞したあなたの「ふつう人生」に終止符を打つべく登場したのが…</p>
+                <h2 class="font-display text-4xl md:text-6xl font-black mb-2 bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan to-brand-blue text-glow">AI搭載・炊飯ワークフローシステム</h2>
+                <p class="font-display text-7xl md:text-9xl font-black text-white tracking-wider mb-8">Aoi炊飯器</p>
                 
-                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 scroll-animate">
-                    <div class="bg-white/5 p-6 rounded-lg border border-white/10 space-y-4">
-                        <div class="flex items-start space-x-3">
-                            <svg class="w-6 h-6 text-yellow-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <p>毎日「とりあえず」でごはんを炊いている</p>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <svg class="w-6 h-6 text-yellow-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <p>炊飯器の「白米・ふつう」以外のボタンを使ったことがない</p>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <svg class="w-6 h-6 text-yellow-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <p>「もっと美味しいごはんが食べたいな」と漠然と思っている</p>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <svg class="w-6 h-6 text-yellow-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <p>炊飯器の浸水時間（約1時間）が地味にストレスだ</p>
-                        </div>
-                    </div>
-                    <div class="bg-white/5 p-6 rounded-lg border border-white/10 space-y-4">
-                        <div class="flex items-start space-x-3">
-                            <svg class="w-6 h-6 text-yellow-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <p>正直、炊飯器の掃除は面倒くさいと感じている</p>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                           <svg class="w-6 h-6 text-yellow-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <p>お米の銘柄を変えても、味の違いがよくわからない</p>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                           <svg class="w-6 h-6 text-yellow-400 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <p>9万円以上の炊飯器なんて「ありえない」と思っている</p>
-                        </div>
-                    </div>
+                <div class="w-full max-w-lg mx-auto h-80 rounded-2xl flex items-center justify-center border-2 border-dashed border-brand-cyan/50 bg-brand-blue/10 mb-12">
+                    <p class="text-brand-cyan/70 text-2xl font-display">Aoi RICE COOKER<br/>VISUAL</p>
                 </div>
 
-                <div class="mt-12 text-center text-gray-300 leading-relaxed space-y-6 scroll-animate">
-                    <p>いかがでしたか？ これらは、かつて「ふつう」の人生に甘んじていた人々の共通の悩みです。</p>
-                    <p>しかし、時代は変わりました。もはや炊飯はエンジニアリング。<strong>令和のごはんは、コードで炊く時代</strong>です。</p>
-                    <p class="max-w-3xl mx-auto">周りの家から毎日「料亭レベル」のごはんの香りがする中で、あなただけが10年前と同じ『ふつう』のごはんを食べ続ける…</p>
-                    <p class="font-display font-extrabold text-2xl md:text-3xl text-red-400 tracking-wider">その『ゆるやかな淘汰』に、<br>あなたは耐えられますか？</p>
-                </div>
-            </div>
-        </section>
+                <p class="max-w-3xl mx-auto text-lg mb-12">これは、もはや炊飯器ではありません。<br>あなたの食生活、ひいては人生の質を根底から覆す<span class="font-bold text-white text-xl">「家庭用フードテック革命」</span>です。</p>
 
-        <!-- 3. Solution -->
-        <section class="py-20 px-4 bg-brand-dark">
-            <div class="max-w-4xl mx-auto text-center scroll-animate">
-                <p class="text-lg md:text-xl text-gray-300">そんな<strong class="text-white">『ふつう人生』に終止符を打つ</strong>べく登場したのが、</p>
-                <h2 class="font-display font-black text-4xl md:text-6xl my-4">次世代AI炊飯器<span class="gradient-text">【Aoi】</span>です。</h2>
-                <p class="text-lg md:text-xl text-gray-300">これは、単なる調理家電ではありません。<br>あなたの食生活、ひいては人生そのものをアップデートする<strong class="text-white">「体験創造デバイス」</strong>です。</p>
-
-                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 scroll-animate">
-                    <div class="border border-gray-700 rounded-xl p-8 text-left">
-                        <h3 class="text-2xl font-bold text-gray-500">【Before】</h3>
-                        <p class="mt-4 text-gray-400">思考停止で「ふつう」ボタンを押し、可もなく不可もないごはんを食べる毎日。<br>退屈で、変化のない、平凡な食卓。</p>
+                <div class="flex flex-col md:flex-row gap-8 max-w-4xl mx-auto">
+                    <div class="flex-1 p-8 rounded-2xl border border-red-500/50 bg-red-900/20">
+                        <h3 class="font-display text-2xl font-bold text-red-400 mb-4">BEFORE</h3>
+                        <p>思考停止でボタンを押すだけの単調な「作業」。味気ない「ふつう」のごはん。</p>
                     </div>
-                    <div class="border border-brand-primary rounded-xl p-8 text-left bg-brand-primary/10 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 h-16 w-16 bg-brand-primary blur-3xl"></div>
-                        <h3 class="text-2xl font-bold text-brand-primary">【After】</h3>
-                        <p class="mt-4 text-gray-200">お米を入れるだけ。あとはすべてAIにおまかせ。<br>毎日、あなたの人生で「一番おいしいごはん」が食卓に並ぶ。<br>食事が感動体験に変わり、日々の幸福度が劇的に向上する。</p>
+                    <div class="flex-1 p-8 rounded-2xl border border-brand-cyan/50 bg-brand-blue/20">
+                        <h3 class="font-display text-2xl font-bold text-brand-cyan mb-4">AFTER</h3>
+                        <p>AIがあなたの好みを学習し、毎日が料亭レベルの「最高の一膳」。炊事がクリエイティブな「創造」に変わる。</p>
                     </div>
                 </div>
-                
-                <p class="mt-12 text-2xl font-bold scroll-animate">Aoiは、炊飯を<strong class="gradient-text">「作業」から「創造」</strong>へと進化させます。</p>
-            </div>
-        </section>
+            </section>
 
-        <!-- 4. Benefits -->
-        <section class="py-20 px-4 bg-brand-dark-accent">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-16 scroll-animate">
-                    <p class="text-lg md:text-xl">「Aoi」がもたらすのは、美味しいごはんだけではありません。</p>
-                    <h2 class="font-display font-bold text-3xl md:text-4xl mt-2">あなたの人生を根底から変える、<br><span class="gradient-text">5つの究極の価値</span>をお約束します。</h2>
-                </div>
-
-                <div class="space-y-8">
+            <!-- 4. Benefits Section -->
+            <section class="fade-in-section">
+                 <h2 class="font-display text-3xl md:text-5xl font-bold text-center mb-4">Aoiが提供する<br><span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan to-blue-500">5つの究極の価値</span></h2>
+                <p class="text-center max-w-3xl mx-auto mb-16">想像してみてください。お米をサッと洗い、釜に入れるだけ。浸水はわずか15分。「Aoi、炊飯して」と話しかければ、一粒一粒がダイヤモンドのように輝く「最高のごはん」が食卓に並びます。</p>
+               
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                     <!-- Benefit 1 -->
-                    <div class="flex flex-col md:flex-row items-center gap-8 scroll-animate benefit-card rounded-2xl p-8">
-                        <div class="flex-shrink-0 text-brand-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                    <div class="benefit-card rounded-2xl p-6 lg:col-span-3">
+                        <div class="flex items-baseline gap-2 mb-2">
+                            <span class="font-display text-5xl font-black text-brand-cyan text-glow">1</span>
+                            <h3 class="font-bold text-xl text-white">【感動】</h3>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-xl md:text-2xl"><span class="text-xs text-brand-primary font-display">VALUE 1</span><br>【究極のパーソナライズ体験】あなただけの「黄金比」をAIが発見</h3>
-                            <p class="mt-2 text-gray-300">Google製AI『Opal』と連携したaioAIが、347種類のお米データベースと炊飯データを学習。使えば使うほどあなたの好みを理解し、<strong>あなた以上にあなたの好みを熟知した「専属料理人」</strong>になります。もう「今日の炊き加減、どうかな？」と悩む必要はありません。</p>
-                        </div>
+                        <p class="text-lg font-bold mb-3">脳が震えるほどの「最高の一膳」を毎日約束</p>
+                        <p class="text-gray-300">347種類のお米データベースを持つaioAIが銘柄を自動判別。ナノバブル浸水と高圧炊飯で、お米のポテンシャルを120%引き出します。<strong>一口食べた瞬間、世界が変わります。</strong></p>
                     </div>
                     <!-- Benefit 2 -->
-                    <div class="flex flex-col md:flex-row items-center gap-8 scroll-animate benefit-card rounded-2xl p-8">
-                        <div class="flex-shrink-0 text-brand-primary">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <div class="benefit-card rounded-2xl p-6 lg:col-span-2">
+                        <div class="flex items-baseline gap-2 mb-2">
+                           <span class="font-display text-5xl font-black text-brand-cyan text-glow">2</span>
+                           <h3 class="font-bold text-xl text-white">【解放】</h3>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-xl md:text-2xl"><span class="text-xs text-brand-primary font-display">VALUE 2</span><br>【時間の解放】面倒な作業から、あなたを完全に解放します</h3>
-                            <p class="mt-2 text-gray-300">浸水時間は、ナノバブル浸水テクノロジーで<strong>わずか15分</strong>。面倒な内釜の掃除も、ワンタッチの<strong>自動蒸気洗浄</strong>で完了。「忙しい」を理由に、食の質を諦める必要はもうありません。これは<strong>人類の勝利</strong>です。</p>
-                        </div>
+                        <p class="text-lg font-bold mb-3">面倒な思考と時間から、あなたを完全に解放</p>
+                        <p class="text-gray-300">AIがすべてを最適化。ワンタッチの蒸気洗浄機能は、<strong>「人類の勝利」</strong>とまで言わしめたほど。</p>
                     </div>
                     <!-- Benefit 3 -->
-                    <div class="flex flex-col md:flex-row items-center gap-8 scroll-animate benefit-card rounded-2xl p-8">
-                        <div class="flex-shrink-0 text-brand-primary">
-                           <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                    <div class="benefit-card rounded-2xl p-6 lg:col-span-2">
+                       <div class="flex items-baseline gap-2 mb-2">
+                           <span class="font-display text-5xl font-black text-brand-cyan text-glow">3</span>
+                           <h3 class="font-bold text-xl text-white">【安心】</h3>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-xl md:text-2xl"><span class="text-xs text-brand-primary font-display">VALUE 3</span><br>【プロの再現性】誰でも、いつでも、料亭レベルの味を</h3>
-                            <p class="mt-2 text-gray-300">1.3気圧の高圧力とダイヤモンドコーティング釜が、お米の甘みと旨みを極限まで引き出します。<strong>「プロだから」「高いお米だから」は言い訳でした。</strong>Aoiがあれば、スーパーのお米ですら、忘れられない一膳に変わります。</p>
-                        </div>
+                        <p class="text-lg font-bold mb-3">大切な家族の健康という"資産"を守る</p>
+                        <p class="text-gray-300">プロアスリートも認める「栄養価を損なわない炊き方」で、食という生命活動の根幹を支えます。</p>
                     </div>
                     <!-- Benefit 4 -->
-                    <div class="flex flex-col md:flex-row items-center gap-8 scroll-animate benefit-card rounded-2xl p-8">
-                        <div class="flex-shrink-0 text-brand-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                    <div class="benefit-card rounded-2xl p-6 lg:col-span-3">
+                        <div class="flex items-baseline gap-2 mb-2">
+                           <span class="font-display text-5xl font-black text-brand-cyan text-glow">4</span>
+                           <h3 class="font-bold text-xl text-white">【創造】</h3>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-xl md:text-2xl"><span class="text-xs text-brand-primary font-display">VALUE 4</span><br>【最高の健康投資】身体が喜ぶ、栄養を損なわない一膳を</h3>
-                            <p class="mt-2 text-gray-300">プロテニスプレーヤーも認める「栄養価を損なわない」最適な炊飯アルゴリズム。日々のパフォーマンスは、質の高い食事から生まれます。最高のコンディションを維持するための、<strong>最も簡単で、最も効果的な自己投資</strong>です。</p>
-                        </div>
+                        <p class="text-lg font-bold mb-3">炊事が「自分を表現するアート」に変わる</p>
+                        <p class="text-gray-300">【業界初】Opal AIワークフロー連動で、炊飯プロセスをスマホで自由にカスタマイズ可能。<strong>「炊く」は「創る」へ。</strong>あなたは食のアーティストになるのです。</p>
                     </div>
-                    <!-- Benefit 5 -->
-                    <div class="flex flex-col md:flex-row items-center gap-8 scroll-animate benefit-card rounded-2xl p-8">
-                        <div class="flex-shrink-0 text-brand-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
+                     <!-- Benefit 5 -->
+                    <div class="benefit-card rounded-2xl p-6 lg:col-span-5">
+                       <div class="flex items-baseline gap-2 mb-2">
+                           <span class="font-display text-5xl font-black text-brand-cyan text-glow">5</span>
+                           <h3 class="font-bold text-xl text-white">【優越】</h3>
                         </div>
-                        <div>
-                            <h3 class="font-bold text-xl md:text-2xl"><span class="text-xs text-brand-primary font-display">VALUE 5</span><br>【未来のライフスタイル】最先端を生きる、洗練された自分へ</h3>
-                            <p class="mt-2 text-gray-300">「OK Google、ごはんを炊いて」。声ひとつで炊飯が始まるスマートな日常。時代遅れの価値観から脱却し、テクノロジーを使いこなす洗練されたライフスタイルが、あなたのものになります。</p>
-                        </div>
+                        <p class="text-lg font-bold mb-3">時代を先取りする「選ばれた人間」になる</p>
+                        <p class="text-gray-300">「コードで炊く」という最先端のスタイルは、あなたの知性を雄弁に物語ります。この炊飯器の所有者と非所有者の間には、もはや埋められない「差」が生まれるでしょう。</p>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- 5. Social Proof -->
-        <section class="py-20 px-4 bg-brand-dark">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-16 scroll-animate">
-                    <h2 class="font-display font-bold text-3xl md:text-4xl">「私だけが知らないの？」<br>ー 日本中が、もう気づいています。</h2>
+            <!-- 5. Social Proof Section -->
+            <section class="fade-in-section">
+                <h2 class="font-display text-3xl md:text-5xl font-bold text-center mb-12">「この炊飯器は、<span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan to-blue-500">もはや事件です</span>」</h2>
+                <div class="max-w-4xl mx-auto space-y-8">
+                    <blockquote class="bg-gray-900/50 p-6 rounded-xl border-l-4 border-brand-cyan">
+                        <p class="text-lg italic">「プロとして言わせてください。これは『炊く』のではなく『創る』調理器具です。家庭料理のレベルを根底から引き上げますね」</p>
+                        <cite class="block text-right mt-4 not-italic text-gray-400">— 料理研究家・佐藤美咲氏</cite>
+                    </blockquote>
+                    <blockquote class="bg-gray-900/50 p-6 rounded-xl border-l-4 border-brand-cyan">
+                        <p class="text-lg italic">「遠征先でも、これさえあればホームの味。今は引退して、家族の食卓を支えてくれています。子どもたちがごはんをおかわりする姿を見るのが、何よりの幸せです」</p>
+                        <cite class="block text-right mt-4 not-italic text-gray-400">— 元プロ野球選手・鈴木翔太氏</cite>
+                    </blockquote>
+                     <blockquote class="bg-gray-900/50 p-6 rounded-xl border-l-4 border-brand-cyan">
+                        <p class="text-lg italic">「正直、対戦相手にはおすすめしませんけど（笑）。栄養価を損なわずに最高のエネルギー源を摂取できる。アスリートにとってこれ以上の味方はいません」</p>
+                        <cite class="block text-right mt-4 not-italic text-gray-400">— プロテニスプレーヤー・高橋真央選手</cite>
+                    </blockquote>
+                    <blockquote class="bg-gray-900/50 p-6 rounded-xl border-l-4 border-brand-cyan">
+                        <p class="text-lg italic">「業界トップクラスの性能です。この価格でこのAIとワークフロー連携は驚異的。編集部の炊飯器、全部これに替えましたよ」</p>
+                        <cite class="block text-right mt-4 not-italic text-gray-400">— 家電マガジン『TECH KITCHEN』編集長</cite>
+                    </blockquote>
                 </div>
+                <div class="max-w-4xl mx-auto mt-16 space-y-6">
+                    <p class="text-center font-bold text-xl">実際にAoi炊飯器を手に入れた方々からは、感動の声が続々と届いています。</p>
+                    <div class="p-6 bg-gradient-to-br from-blue-900/30 to-purple-900/30 rounded-xl border border-blue-500/30">
+                        <p>"白米だけで、こんなに感動して涙が出そうになったのは初めてです。もう、ふりかけも卵もいりません"</p>
+                        <p class="text-right text-gray-400 mt-2">— 30代・女性</p>
+                    </div>
+                     <div class="p-6 bg-gradient-to-br from-blue-900/30 to-purple-900/30 rounded-xl border border-blue-500/30">
+                        <p>"ごはんが美味しいだけで、夕食がこんなに豊かになるなんて。夫が飲み会を断って早く帰ってくるようになりました"</p>
+                        <p class="text-right text-gray-400 mt-2">— 40代・主婦</p>
+                    </div>
+                     <div class="p-6 bg-gradient-to-br from-blue-900/30 to-purple-900/30 rounded-xl border border-blue-500/30">
+                        <p>"持ち上げると『うっ』となる重さ。この塊感こそがテクノロジーの結晶だと感じます。所有欲が満たされる逸品です"</p>
+                        <p class="text-right text-gray-400 mt-2">— 50代・男性</p>
+                    </div>
+                </div>
+            </section>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 scroll-animate">
-                    <div class="text-center p-6 bg-brand-dark-accent rounded-lg border border-white/10">
-                        <h3 class="font-bold text-xl text-brand-primary">MHK特集</h3>
-                        <p class="mt-2 text-gray-300">「暮らしのテクノロジー最前線」で特集後、注文が殺到し公式サイトがサーバーダウン。</p>
+            <!-- 6. Objection Handling -->
+            <section class="fade-in-section">
+                <h2 class="font-display text-3xl md:text-5xl font-bold text-center mb-12">それでも浮かぶ<span class="text-brand-cyan">疑問</span>にお答えします</h2>
+                <div class="max-w-4xl mx-auto space-y-8">
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700">
+                        <h3 class="text-xl font-bold mb-3"><span class="text-brand-cyan font-display mr-2">Q1.</span>価格が98,000円は、さすがに高すぎませんか？</h3>
+                        <p><span class="text-white font-bold mr-2">A.</span>はい、高いです。ですが10年使うとして、<strong>1回あたり約27円。</strong>毎日飲む缶コーヒーよりも安い投資で、あなたの食生活と人生の質が劇的に向上します。これでも「高い」でしょうか？</p>
                     </div>
-                    <div class="text-center p-6 bg-brand-dark-accent rounded-lg border border-white/10">
-                        <h3 class="font-bold text-xl text-brand-primary">TECH KITCHEN</h3>
-                        <p class="mt-2 text-gray-300">2024年最も革新的な調理家電に選出。「編集部の炊飯器、全部これに替えた」とのコメントも。</p>
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700">
+                        <h3 class="text-xl font-bold mb-3"><span class="text-brand-cyan font-display mr-2">Q2.</span>最新技術は難しそうで、使いこなせるか心配です。</h3>
+                        <p><span class="text-white font-bold mr-2">A.</span>ご安心ください。最高の技術は<strong>「あなたに何も考えさせない」</strong>ために存在します。お米を入れてボタンを押すだけ。あとはAIが全自動で「最高」を届けてくれます。</p>
                     </div>
-                    <div class="text-center p-6 bg-brand-dark-accent rounded-lg border border-white/10">
-                        <h3 class="font-bold text-xl text-brand-primary">5万台突破</h3>
-                        <p class="mt-2 text-gray-300">販売台数は、わずか1年で5万台を突破しました。</p>
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700">
+                        <h3 class="text-xl font-bold mb-3"><span class="text-brand-cyan font-display mr-2">Q3.</span>お手入れが面倒なのでは？</h3>
+                        <p><span class="text-white font-bold mr-2">A.</span>内蓋のパーツはたったの2点。さらに、ボタン一つで高温蒸気洗浄・除菌する<strong>「ワンタッチ蒸気洗浄モード」</strong>を搭載。炊飯器の掃除という悩みは、今日で終わります。</p>
+                    </div>
+                    <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-700">
+                        <h3 class="text-xl font-bold mb-3"><span class="text-brand-cyan font-display mr-2">Q4.</span>万が一、すぐに壊れたらどうしよう…</h3>
+                        <p><span class="text-white font-bold mr-2">A.</span>公式サイト限定で<strong>「3年間の長期延長保証」</strong>を無料でお付けします。98,000円の投資を、私たちが3年間、完全にお守りすることをお約束します。</p>
                     </div>
                 </div>
+            </section>
 
-                <div class="text-center mb-12 scroll-animate">
-                    <h3 class="font-display font-bold text-2xl md:text-3xl">専門家やトップアスリートも絶賛</h3>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-                    <div class="testimonial-card p-6 rounded-2xl scroll-animate">
-                        <p class="text-gray-300">「プロとして言わせてください。これは革命です。お米のポテンシャルを100%引き出す、今までにない調理器具。もう、これなしでのレシピ開発は考えられません。」</p>
-                        <p class="mt-4 font-bold text-right">- 料理研究家・佐藤美咲氏</p>
+            <!-- 7. Offer Section -->
+            <section id="offer" class="fade-in-section">
+                <div class="bg-gradient-to-b from-brand-blue to-dark-bg p-8 md:p-12 rounded-2xl border border-brand-cyan/30">
+                    <h2 class="font-display text-3xl md:text-5xl font-bold text-center mb-4 text-white">あなたの人生を変えるための、<br>特別なご提案です</h2>
+                    <p class="text-center text-lg font-bold text-brand-cyan mb-8">【Aoi炊飯器・コンプリートセット】</p>
+                    <div class="max-w-md mx-auto bg-black/30 p-6 rounded-lg text-center mb-8">
+                        <ul class="space-y-2">
+                            <li>Aoi炊飯器 本体（マットブラック）</li>
+                            <li>ダイヤモンドコーティング釜（5.5合炊き）</li>
+                            <li>自立式しゃもじ、計量カップ</li>
+                            <li>取扱説明書（保証書付き）</li>
+                        </ul>
                     </div>
-                    <div class="testimonial-card p-6 rounded-2xl scroll-animate" style="transition-delay: 0.3s;">
-                        <p class="text-gray-300">「現役時代にこれがあれば…。遠征先でも常に最高のコンディションを維持できたはず。今はどこでもホームの味。家族の食卓を支えてくれています。」</p>
-                        <p class="mt-4 font-bold text-right">- 元プロ野球選手・鈴木翔太氏</p>
+                    <div class="text-center mb-10">
+                        <p class="text-lg text-gray-400 line-through">市場価値 120,000円</p>
+                        <p class="font-display text-6xl md:text-8xl font-black text-white my-2">98,000<span class="text-3xl md:text-4xl">円</span></p>
+                        <p class="font-bold text-lg text-white">（税込・送料無料）</p>
+                        <p class="mt-2 text-brand-cyan">分割払いなら <span class="text-2xl font-bold">月々4,084円〜</span>（1日あたりわずか136円）</p>
                     </div>
-                    <div class="testimonial-card p-6 rounded-2xl scroll-animate" style="transition-delay: 0.4s;">
-                        <p class="text-gray-300">「試合前の食事管理は本当に大事。栄養価を損なわない炊き方ができるから、アスリートにもおすすめです。…正直、対戦相手にはおすすめしませんけど。」</p>
-                        <p class="mt-4 font-bold text-right">- プロテニスプレーヤー・高橋真央選手</p>
-                    </div>
-                </div>
-
-                <div class="text-center mb-12 scroll-animate">
-                    <h3 class="font-display font-bold text-2xl md:text-3xl">実際に人生が変わった方々の声</h3>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="testimonial-card p-6 rounded-2xl scroll-animate">
-                        <p class="font-bold text-xl text-brand-primary">「毎日の夕食が楽しみに」</p>
-                        <p class="mt-2 text-gray-300">マンネリだった食卓が、Aoiが来てから一変しました。「今日のごはん、甘みが強いね！」と、夫や子供たちの会話が増えたのが何より嬉しいです。</p>
-                        <p class="mt-4 font-bold text-right text-sm text-gray-400">- 40代・主婦</p>
-                    </div>
-                    <div class="testimonial-card p-6 rounded-2xl scroll-animate" style="transition-delay: 0.3s;">
-                        <p class="font-bold text-xl text-brand-primary">「自炊のレベルが上がった」</p>
-                        <p class="mt-2 text-gray-300">忙しい毎日でも、帰宅後すぐに美味しいごはんが食べられるのは最高です。友人を招いた時も「どこのお店のごはん？」と驚かれました。</p>
-                        <p class="mt-4 font-bold text-right text-sm text-gray-400">- 20代・男性</p>
-                    </div>
-                    <div class="testimonial-card p-6 rounded-2xl scroll-animate" style="transition-delay: 0.4s;">
-                        <p class="font-bold text-xl text-brand-primary">「最高の自己投資でした」</p>
-                        <p class="mt-2 text-gray-300">健康のために玄米を食べていますが、Aoiで炊くとパサつかず、本当に美味しく食べられます。1日27円でこのQOL向上は、安すぎると感じています。</p>
-                        <p class="mt-4 font-bold text-right text-sm text-gray-400">- 50代・経営者</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 6. Objection Handling -->
-        <section class="py-20 px-4 bg-brand-dark-accent">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-12 scroll-animate">
-                    <h2 class="font-display font-bold text-3xl md:text-4xl">「でも、やっぱり…」<br>あなたの最後の不安に、正直にお答えします。</h2>
-                </div>
-                <div id="accordion" class="space-y-4 scroll-animate">
-                    <!-- Q1 -->
-                    <div class="accordion-item bg-brand-dark border border-white/10 rounded-lg">
-                        <button class="accordion-header w-full flex justify-between items-center text-left p-6">
-                            <span class="font-bold text-lg md:text-xl"><span class="text-brand-primary mr-2">Q.</span>炊飯器に98,000円は高すぎませんか？</span>
-                            <span class="accordion-icon text-brand-primary text-3xl transition-transform transform">+</span>
-                        </button>
-                        <div class="accordion-content">
-                            <div class="p-6 pt-0 text-gray-300 leading-relaxed">
-                                <p><span class="text-brand-secondary font-bold mr-2">A.</span>はい、初期投資は決して安くありません。ですが、仮に10年間使うとすれば、3,650回の食事。1回あたりのコストは<strong class="text-yellow-300 text-xl">わずか27円</strong>です。缶コーヒー1本より安い投資で、10年間の食生活の質が「最高」に変わる。これは、あなたの人生における<strong class="text-white">最も賢い投資</strong>だと断言できます。</p>
-                            </div>
+                    
+                    <h3 class="text-center text-2xl font-bold mb-6 text-yellow-300">【公式サイト限定・2大特典】</h3>
+                    <div class="flex flex-col md:flex-row gap-6 max-w-4xl mx-auto">
+                        <div class="flex-1 p-6 rounded-xl bg-yellow-400/10 border border-yellow-400/50 text-center">
+                            <p class="font-bold text-lg text-yellow-300">特典1：【無料】3年間 長期延長保証</p>
+                            <p class="text-2xl font-bold text-white my-1">9,800円相当</p>
+                            <p class="text-yellow-200/80">故障の心配なく、毎日最高の体験をお楽しみください。</p>
                         </div>
-                    </div>
-                    <!-- Q2 -->
-                    <div class="accordion-item bg-brand-dark border border-white/10 rounded-lg">
-                        <button class="accordion-header w-full flex justify-between items-center text-left p-6">
-                            <span class="font-bold text-lg md:text-xl"><span class="text-brand-primary mr-2">Q.</span>AIといっても、本当に私の好みを理解できるのですか？</span>
-                            <span class="accordion-icon text-brand-primary text-3xl transition-transform transform">+</span>
-                        </button>
-                        <div class="accordion-content">
-                            <div class="p-6 pt-0 text-gray-300 leading-relaxed">
-                                <p><span class="text-brand-secondary font-bold mr-2">A.</span>はい、できます。Aoiは単なるプログラムではありません。過去の炊飯データ、水温、気圧、そしてあなたの微妙な設定変更をすべて学習し続けます。<strong class="text-white">「気づいてないのはあなただけです。あなたの本当の好みは、これですよ」</strong>と、AIが教えてくれる感覚に驚くはずです。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Q3 -->
-                    <div class="accordion-item bg-brand-dark border border-white/10 rounded-lg">
-                        <button class="accordion-header w-full flex justify-between items-center text-left p-6">
-                            <span class="font-bold text-lg md:text-xl"><span class="text-brand-primary mr-2">Q.</span>最新機能が多くて、操作が難しそう…</span>
-                            <span class="accordion-icon text-brand-primary text-3xl transition-transform transform">+</span>
-                        </button>
-                        <div class="accordion-content">
-                            <div class="p-6 pt-0 text-gray-300 leading-relaxed">
-                                <p><span class="text-brand-secondary font-bold mr-2">A.</span>ご安心ください。基本操作は<strong class="text-white">「お米を入れて、スタートボタンを押すだけ」</strong>です。内蔵センサーがお米の銘柄まで自動判別し、最適な炊飯モードを提案します。また、スマートスピーカーと連携すれば「OK Google、ごはんを炊いて」の一言で炊飯を開始できます。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Q4 -->
-                    <div class="accordion-item bg-brand-dark border border-white/10 rounded-lg">
-                        <button class="accordion-header w-full flex justify-between items-center text-left p-6">
-                            <span class="font-bold text-lg md:text-xl"><span class="text-brand-primary mr-2">Q.</span>高機能な分、お手入れが大変なのでは？</span>
-                            <span class="accordion-icon text-brand-primary text-3xl transition-transform transform">+</span>
-                        </button>
-                        <div class="accordion-content">
-                            <div class="p-6 pt-0 text-gray-300 leading-relaxed">
-                                <p><span class="text-brand-secondary font-bold mr-2">A.</span>まったく逆です。Aoiには<strong class="text-white">「自動洗浄モード」</strong>が搭載されています。内釜を入れたままワンタッチするだけで、高温の蒸気が隅々まで洗浄・除菌。毎日のお手入れの手間を劇的に削減します。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Q5 -->
-                    <div class="accordion-item bg-brand-dark border border-white/10 rounded-lg">
-                        <button class="accordion-header w-full flex justify-between items-center text-left p-6">
-                            <span class="font-bold text-lg md:text-xl"><span class="text-brand-primary mr-2">Q.</span>もしすぐに壊れてしまったら、と考えると不安です。</span>
-                            <span class="accordion-icon text-brand-primary text-3xl transition-transform transform">+</span>
-                        </button>
-                        <div class="accordion-content">
-                            <div class="p-6 pt-0 text-gray-300 leading-relaxed">
-                                <p><span class="text-brand-secondary font-bold mr-2">A.</span>そのご不安を解消するため、メーカーの自信の証として、通常の1年保証に加え、<strong class="text-white">公式サイト限定で「3年間の無料延長保証」</strong>をお付けしています。長期にわたり、あなたの最高の食卓をサポートすることをお約束します。</p>
-                            </div>
+                        <div class="flex-1 p-6 rounded-xl bg-yellow-400/10 border border-yellow-400/50 text-center">
+                            <p class="font-bold text-lg text-yellow-300">特典2：【今だけ】最高級ブランド米『龍の瞳』2kg</p>
+                            <p class="text-2xl font-bold text-white my-1">4,000円相当</p>
+                            <p class="text-yellow-200/80">箱を開けたその日から、最高の炊飯体験を。</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- 7. Offer -->
-        <section id="offer" class="py-20 px-4 bg-brand-dark relative overflow-hidden">
-             <div class="absolute inset-0 bg-grid-white/5 [mask-image:linear-gradient(to_bottom,white,transparent)]"></div>
-             <div class="absolute top-0 left-0 w-96 h-96 bg-brand-primary/20 rounded-full blur-3xl"></div>
-             <div class="absolute bottom-0 right-0 w-96 h-96 bg-brand-secondary/20 rounded-full blur-3xl"></div>
-
-            <div class="max-w-5xl mx-auto relative z-10">
-                <div class="text-center mb-12 scroll-animate">
-                    <h2 class="font-display font-bold text-3xl md:text-4xl">あなたの人生を変えるための、<br>特別なご提案です。</h2>
-                </div>
-
-                <div class="bg-brand-dark-accent/80 border border-white/10 rounded-2xl p-8 md:p-12 backdrop-blur-md scroll-animate">
-                    <h3 class="font-bold text-2xl mb-6">【ご提供内容】</h3>
-                    <div class="md:flex md:space-x-8">
-                        <div class="md:w-1/2">
-                            <h4 class="font-display font-black text-3xl md:text-4xl mb-4">次世代AI炊飯器<br><span class="gradient-text">【Aoi】</span>本体</h4>
-                            <p class="text-gray-400">5.5合炊き / カラー：マットブラック</p>
-                            <p class="text-gray-400 text-sm mt-4">サイズ：W280 × D350 × H230 mm / 重量：6.2kg</p>
-                        </div>
-                        <div class="md:w-1/2 mt-6 md:mt-0 grid grid-cols-2 gap-x-4 gap-y-2 text-gray-300">
-                           <p>✓ aioAI搭載</p>
-                           <p>✓ スマートホーム連携</p>
-                           <p>✓ 347種お米DB内蔵</p>
-                           <p>✓ 自動洗浄モード</p>
-                           <p>✓ ナノバブル浸水</p>
-                           <p>✓ 1.3気圧 高圧力IH</p>
-                           <p>✓ ダイヤモンド釜</p>
-                           <p>✓ Google Opal連携</p>
-                        </div>
+            </section>
+            
+            <!-- 8. Urgency -->
+            <section class="fade-in-section">
+                <div class="max-w-4xl mx-auto p-8 rounded-2xl border-2 border-yellow-500 bg-yellow-900/20">
+                    <h2 class="font-display text-3xl md:text-4xl font-bold text-center mb-4 text-yellow-300">【警告】このご案内は、<br>すぐに終了する可能性があります</h2>
+                    <p class="text-center text-lg mb-6">大変申し訳ありませんが、今回の特典には数に限りがございます。特に、特典の<strong>最高級ブランド米『龍の瞳』</strong>は、物理的な上限があるため、<span class="text-2xl font-bold text-white">【先着300名様限定】</span>とさせていただきます。</p>
+                    <div class="text-center bg-black/30 p-4 rounded-lg">
+                        <p class="text-lg">前回MHK放送時：<strong class="text-red-400">アクセス集中で3分でサーバーダウン。</strong><br>次回入荷まで<strong class="text-red-400">3ヶ月待ち</strong>となりました。</p>
                     </div>
+                    <p class="text-center text-xl mt-6">その一瞬の迷いが、あなたから「人生を変える体験」を永遠に奪い去るかもしれません。</p>
+                </div>
+            </section>
+
+            <!-- 9. CTA Section -->
+            <section class="fade-in-section text-center">
+                <h2 class="font-display text-3xl md:text-5xl font-bold text-center mb-6">あなたの未来は、2つに1つです。</h2>
+                <p class="max-w-3xl mx-auto text-lg mb-12">今まで通り「ふつう」のごはんに甘んじるか。<br>それとも、毎日が感動に変わる「最高の一膳」で、人生そのものを豊かにするか。</p>
+
+                <div class="max-w-lg mx-auto space-y-6">
+                    <a href="#" class="block w-full bg-brand-orange text-white py-5 px-6 text-xl font-bold rounded-lg glow-button text-center leading-tight">
+                        【はい、私も『最高の一膳』で人生を変えます】<br>
+                        <span class="text-base font-normal">限定特典付きでAoi炊飯器を手に入れる</span>
+                    </a>
+                    <a href="#" class="block w-full bg-gray-700 hover:bg-gray-600 transition-colors text-white py-4 px-6 text-lg font-bold rounded-lg border border-gray-500">
+                        【3年保証で安心】分割払いで申し込む
+                    </a>
                 </div>
 
-                <div class="text-center mt-16 scroll-animate">
-                    <p class="text-xl font-bold">さらに、今このページからお申し込みの方限定！</p>
-                    <h3 class="font-display font-extrabold text-2xl md:text-4xl my-2 text-yellow-300">行動を起こしたあなたへの敬意を込めた<br>【3大特典】をプレゼントします。</h3>
-                </div>
-
-                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center scroll-animate">
-                    <div class="bg-yellow-400/10 border border-yellow-400/30 rounded-xl p-6">
-                        <p class="font-bold text-yellow-300">【特典1】</p>
-                        <h4 class="text-xl font-bold mt-2">高級米『山形つや姫』2kg</h4>
-                        <p class="text-sm text-yellow-400">(3,000円相当)</p>
-                        <p class="mt-3 text-gray-300 text-sm">届いたその瞬間から、最高の体験を。箱を開けた瞬間に炊きたくなる「罠」です。</p>
-                    </div>
-                    <div class="bg-yellow-400/10 border border-yellow-400/30 rounded-xl p-6">
-                        <p class="font-bold text-yellow-300">【特典2】</p>
-                        <h4 class="text-xl font-bold mt-2">至高のレシピブック</h4>
-                        <p class="text-sm text-yellow-400">(非売品)</p>
-                        <p class="mt-3 text-gray-300 text-sm">プロ考案の特別レシピ集。炊き込みご飯からリゾットまで、レパートリーが無限に広がります。</p>
-                    </div>
-                    <div class="bg-yellow-400/10 border border-yellow-400/30 rounded-xl p-6">
-                        <p class="font-bold text-yellow-300">【特典3】</p>
-                        <h4 class="text-xl font-bold mt-2">3年間の無料延長保証</h4>
-                        <p class="text-sm text-yellow-400">(12,000円相当)</p>
-                        <p class="mt-3 text-gray-300 text-sm">通常1年の保証を特別に3年へ延長。高額な投資への不安を完全に取り除きます。</p>
-                    </div>
-                </div>
-
-                <div class="mt-16 text-center scroll-animate">
-                    <p class="text-lg text-gray-300">これら全てを含んだ特別な価格は…</p>
-                    <p class="font-display font-black text-6xl md:text-8xl my-4">98,000<span class="text-2xl md:text-4xl ml-2">円</span><span class="text-xl md:text-2xl ml-2 font-sans font-normal">(税込)</span></p>
-                    <div class="inline-block bg-white/10 border border-white/20 rounded-full px-6 py-2">
-                        <p class="text-xl md:text-2xl font-bold">1日あたり、<span class="gradient-text text-3xl md:text-4xl">わずか27円</span></p>
-                    </div>
-                    <p class="mt-8 max-w-3xl mx-auto text-gray-400">その投資をためらうことで、あなたはこれから先10年間、3,650回もの「最高の食事」の機会を失い続けます。その損失額は、計り知れません。</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 8. Urgency -->
-        <section class="py-20 px-4 bg-red-900/20">
-            <div class="max-w-4xl mx-auto text-center scroll-animate">
-                <div class="flex justify-center items-center gap-4">
-                    <svg class="w-12 h-12 text-red-400 animate-pulse-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    <h2 class="font-display font-bold text-3xl md:text-4xl text-red-400 tracking-wider">【重要】お急ぎください</h2>
-                </div>
-                <p class="mt-4 text-xl font-bold">これが、あなたが手に入れる最後のチャンスかもしれません。</p>
-                <p class="mt-6 text-gray-300 leading-relaxed">
-                    Aoi炊飯器は、その心臓部であるAIチップと高精度センサーに、極めて希少な部品を使用しています。
-                    そのため、<strong>月間に生産できる台数には限りがございます。</strong><br><br>
-                    前回、MHKでの放送後、<strong>わずか3時間で3ヶ月分の在庫がすべて完売</strong>し、多くの方が手に入れるまでに数ヶ月お待ちいただくことになりました。<br><br>
-                    今回ご用意できた在庫も、すでにご注文が殺到しています。このページを閉じれば、次にあなたが購入できるのはいつになるかお約束できません。
-                </p>
-                <div class="mt-8 p-6 border-2 border-dashed border-yellow-400/50 rounded-lg bg-yellow-400/10">
-                    <p class="font-display font-bold text-xl md:text-3xl text-yellow-300">「あの時、決断しておけば…」</p>
-                    <p class="mt-3">そう後悔する未来と、毎日「最高の一膳」に感動する未来。<br>どちらを選ぶかは、<strong>「今」</strong>のあなたの決断にかかっています。</p>
-                    <p class="mt-4 text-sm font-bold text-yellow-500">※特典も、今回の在庫分がなくなり次第、予告なく終了いたします。</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 9. CTA -->
-        <section class="py-20 px-4 bg-brand-dark-accent">
-            <div class="max-w-3xl mx-auto text-center space-y-12 scroll-animate">
-                <div>
-                    <p class="text-xl font-bold">決断の時は、今です。</p>
-                    <p class="mt-2 text-gray-300">10年間の『ふつう』に終止符を打ち、感動と喜びに満ちた食生活を始めましょう。</p>
-                </div>
-                
-                <div class="space-y-6">
-                    <div>
-                        <p class="mb-3 text-sm text-gray-400">▼もう『ふつうの毎日』に戻らないと決める▼</p>
-                        <a href="#" target="_blank" class="cta-button inline-block bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-bold text-lg md:text-xl py-5 px-12 rounded-full shadow-lg w-full max-w-lg">
-                            今すぐAoi炊飯器を手に入れ、人生を変える
-                        </a>
-                    </div>
-                     <div>
-                        <p class="mb-3 text-sm text-gray-400">▼毎日が『最高の一膳』になる未来を手に入れる▼</p>
-                        <a href="#" target="_blank" class="cta-button inline-block bg-white text-brand-primary font-bold text-lg md:text-xl py-5 px-12 rounded-full w-full max-w-lg">
-                            3大特典付きでAoi炊飯器を申し込む
-                        </a>
-                    </div>
-                </div>
-
-                <div class="text-left max-w-md mx-auto p-6 bg-white/5 border border-white/10 rounded-lg">
-                    <h4 class="font-bold text-lg text-center mb-4">【お申し込み後の流れ】</h4>
-                    <ol class="space-y-3 text-gray-300">
-                        <li class="flex items-start"><span class="mr-3 bg-brand-primary text-brand-dark font-bold rounded-full w-6 h-6 flex items-center justify-center">1</span>上のボタンをクリックし、お申し込みフォームへ。</li>
-                        <li class="flex items-start"><span class="mr-3 bg-brand-primary text-brand-dark font-bold rounded-full w-6 h-6 flex items-center justify-center">2</span>必要事項を入力（わずか1分で完了します）。</li>
-                        <li class="flex items-start"><span class="mr-3 bg-brand-primary text-brand-dark font-bold rounded-full w-6 h-6 flex items-center justify-center">3</span>ご注文確定後、最短翌日に商品を発送いたします。</li>
-                        <li class="flex items-start"><span class="mr-3 bg-brand-primary text-brand-dark font-bold rounded-full w-6 h-6 flex items-center justify-center">4</span>商品が届いたその日から、あなたの食卓は「感動の舞台」に変わります。</li>
+                 <div class="max-w-2xl mx-auto mt-12 text-left bg-gray-900/50 p-6 rounded-lg border border-gray-700">
+                    <h3 class="font-bold text-lg mb-3 text-brand-cyan">【お申し込み後の流れ】</h3>
+                    <ol class="list-decimal list-inside space-y-2">
+                        <li>上のボタンをクリックし、お申し込みフォームへ。</li>
+                        <li>お名前、ご住所など必要情報を入力（わずか3分で完了します）。</li>
+                        <li>決済完了後、最短翌日に商品を発送いたします。</li>
                     </ol>
+                    <p class="mt-4 font-bold">箱を開けた瞬間から、あなたの新しい人生が始まります。</p>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- 10. P.S. -->
-        <section class="py-20 px-4 bg-brand-dark">
-            <div class="max-w-3xl mx-auto border-t border-white/10 pt-12 scroll-animate">
-                <p class="font-bold text-xl mb-6">P.S.</p>
-                <div class="space-y-6 text-gray-400 leading-relaxed">
-                    <p>ここまでお読みいただき、ありがとうございます。<br>開発責任者の青井です。</p>
-                    <p>私がなぜこの炊飯器を作ったのか。それは、私自身が15年間、何も考えずに「ふつう」ボタンを押し続けてきた一人だったからです。</p>
-                    <p>ある日、老舗の料亭で食べた一膳のごはんの衝撃が忘れられませんでした。「なぜ、同じお米なのにここまで味が違うんだ？」</p>
-                    <p>その日から、私の探求は始まりました。テクノロジーの力で、あの感動を、すべての家庭に届けたい。日本の食文化の中心である「ごはん」を再定義し、人々の人生を豊かにしたい。</p>
-                    <p class="font-bold text-gray-200">Aoiは、そんな私たちの狂気にも近い情熱の結晶です。</p>
-                    <p>もしあなたが、今の人生に少しでも物足りなさを感じているのなら。もしあなたが、日々の小さな瞬間に、もっと喜びを見出したいと願うのなら。</p>
-                    <p class="font-bold text-gray-200">Aoiは、そのための最も確実な答えです。</p>
-                    <p>98,000円という価格は、あなたの人生を変えるための「チケット代」です。それは消費ではなく、未来のあなたへの<strong class="text-white">最高の『投資』</strong>です。</p>
-                    <p class="text-xl font-bold text-white">もう迷っている時間はありません。<br>最高の未来は、あなたの決断を待っています。</p>
-                </div>
-                <div class="mt-12">
-                    <p class="mb-3 text-sm text-gray-400 text-center">▼在庫がなくなる前に、あなたの未来を予約する▼</p>
-                    <div class="text-center">
-                        <a href="#offer" class="cta-button inline-block bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-bold text-lg py-4 px-10 rounded-full shadow-lg">
-                            今すぐAoi炊飯器の詳細を確認する
-                        </a>
+            <!-- 10. P.S. Section -->
+            <section class="fade-in-section">
+                <div class="max-w-4xl mx-auto p-8 rounded-2xl border border-dashed border-gray-600">
+                    <h2 class="font-bold text-xl mb-4 text-gray-400">P.S.</h2>
+                    <div class="space-y-4 text-gray-300">
+                        <p>最後まで読んでいただき、ありがとうございます。</p>
+                        <p>開発責任者の私自身、10年間「ふつう」の炊飯器を使い、人生もどこか停滞していました。「たかがごはん、されどごはん」。毎日の食事が変われば、人生も変わる。その想いだけで、このAoi炊飯器を開発しました。</p>
+                        <p>結果、私の人生は劇的に変わりました。食事の時間が待ち遠しくなり、家族との会話が増え、仕事への活力も湧いてきたのです。</p>
+                        <p>あなたにも、この感動を味わってほしい。心からそう願っています。</p>
+                        <p class="mt-6 font-bold text-white text-lg text-center">このままページを閉じて「ふつう」の毎日に戻りますか？<br>それとも、1日たった27円の投資で、毎日が感動に変わる扉を開きますか？</p>
+                        <p class="text-center text-sm text-gray-400 mt-4">（3年間の延長保証が付いているので、あなたにリスクは一切ありません）</p>
                     </div>
                 </div>
-            </div>
-        </section>
-    </main>
+            </section>
+        </main>
+
+    </div>
 
     <script>
-        // Accordion functionality
-        document.addEventListener('DOMContentLoaded', () => {
-            const accordionHeaders = document.querySelectorAll('.accordion-header');
-            accordionHeaders.forEach(header => {
-                header.addEventListener('click', () => {
-                    const accordionItem = header.parentElement;
-                    const currentlyActive = document.querySelector('.accordion-item.active');
-                    if (currentlyActive && currentlyActive !== accordionItem) {
-                        currentlyActive.classList.remove('active');
-                    }
-                    accordionItem.classList.toggle('active');
-                });
+        const sections = document.querySelectorAll('.fade-in-section');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
             });
+        }, {
+            threshold: 0.1
         });
-
-        // Scroll animation functionality
-        document.addEventListener('DOMContentLoaded', () => {
-            const animatedElements = document.querySelectorAll('.scroll-animate');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                    }
-                });
-            }, {
-                threshold: 0.1
-            });
-            animatedElements.forEach(el => {
-                observer.observe(el);
-            });
+        sections.forEach(section => {
+            observer.observe(section);
         });
     </script>
 </body>
